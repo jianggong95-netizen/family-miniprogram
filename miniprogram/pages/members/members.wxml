@@ -1,0 +1,31 @@
+<view class="tip-card">
+  <view class="tip-title">家人如何使用？</view>
+  <view class="tip-line">1. 管理员在此添加家人名字</view>
+  <view class="tip-line">2. 家人在「我的」页查看邀请码（{{family ? family.invite_code : '—'}}），打开小程序首次登录时输入</view>
+  <view class="tip-line">3. 家人选择自己的名字完成绑定，即可开始录入自己的衣服</view>
+</view>
+
+<view class="card">
+  <view class="member" wx:for="{{members}}" wx:key="id">
+    <view class="avatar">{{item.name[0]}}</view>
+    <view class="info">
+      <view class="name">
+        {{item.name}}
+        <text class="role-tag" wx:if="{{item.role === 'admin'}}">管理员</text>
+        <text class="bound" wx:if="{{item.openid}}">已绑定</text>
+        <text class="unbound" wx:else>未绑定微信</text>
+      </view>
+      <view class="sub">{{item.clothing_count}} 件衣服</view>
+    </view>
+    <view class="toggle" wx:if="{{isAdmin && item.role !== 'admin'}}" data-id="{{item.id}}" data-active="{{item.is_active}}" data-name="{{item.name}}" bindtap="toggleActive">
+      {{item.is_active ? '停用' : '启用'}}
+    </view>
+  </view>
+</view>
+
+<view class="add-card" wx:if="{{isAdmin}}">
+  <view class="add-row">
+    <input class="add-input" placeholder="家人名字，如：妈妈" value="{{newName}}" bindinput="onNameInput" confirm-type="done" bindconfirm="addMember" />
+    <button class="btn-primary add-btn" bindtap="addMember">添加</button>
+  </view>
+</view>

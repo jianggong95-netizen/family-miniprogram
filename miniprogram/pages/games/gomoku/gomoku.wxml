@@ -1,0 +1,81 @@
+<view class="gomoku-page">
+  <view class="mode-tabs">
+    <view class="mode-tab {{mode === 'pvp' ? 'active' : ''}}" bindtap="pickMode" data-m="pvp">双人</view>
+    <view class="mode-tab {{mode === 'ai' ? 'active' : ''}}" bindtap="pickMode" data-m="ai">人机</view>
+    <view class="mode-tab {{mode === 'online' ? 'active' : ''}}" bindtap="pickMode" data-m="online">联机</view>
+    <view class="mute-btn" bindtap="toggleMute">{{muted ? '🔇' : '🔊'}}</view>
+  </view>
+
+  <!-- 联机大厅 -->
+  <block wx:if="{{mode === 'online' && stage === 'lobby'}}">
+    <view class="lobby-card">
+      <view class="lobby-title">创建房间</view>
+      <view class="lobby-desc">创建后把 4 位数字房间码告诉家人，对方输入即可开战（黑先）</view>
+      <view class="lobby-btn primary" bindtap="createRoom">创建房间</view>
+    </view>
+    <view class="lobby-card">
+      <view class="lobby-title">加入房间</view>
+      <input class="lobby-input" type="number" placeholder="输入 4 位数字房间码" bindinput="onJoinCodeInput" maxlength="4" />
+      <view class="code-echo" wx:if="{{joinCode}}">当前输入：<text class="code-echo-num">{{joinCode}}</text></view>
+      <view class="lobby-btn" bindtap="joinRoom">加入对战</view>
+      <view class="lobby-desc" style="margin-top:20rpx;margin-bottom:0;">提示：模拟器里物理键盘可能打不进数字，请用鼠标点输入框唤出键盘；联机需两台设备、两个微信号</view>
+    </view>
+    <view class="lobby-tip">联机对战需双方各自打开小程序，通过云端实时同步棋局</view>
+  </block>
+
+  <!-- 等待对手 -->
+  <block wx:elif="{{mode === 'online' && stage === 'waiting'}}">
+    <view class="lobby-card center">
+      <view class="lobby-title">房间码</view>
+      <view class="room-code" bindtap="copyCode">{{roomCode}}</view>
+      <view class="lobby-desc">点房间码可复制 · 等待对手加入…</view>
+      <view class="lobby-btn" bindtap="backLobby">取消</view>
+    </view>
+  </block>
+
+  <!-- 准备开局 -->
+  <block wx:elif="{{mode === 'online' && stage === 'ready'}}">
+    <view class="lobby-card center">
+      <view class="lobby-title">对手已就位：{{oppName}}</view>
+      <view class="lobby-desc">你执{{myColor === 'black' ? '黑（先走）' : '白'}} · 双方都点击「开始」后进入对局</view>
+      <view class="ready-state">
+        <text class="rchip {{iReady ? 'on' : ''}}">我 {{iReady ? '✓ 已准备' : '未准备'}}</text>
+        <text class="rchip {{oppReady ? 'on' : ''}}">{{oppName}} {{oppReady ? '✓ 已准备' : '未准备'}}</text>
+      </view>
+      <view class="lobby-btn primary {{iReady ? 'disabled' : ''}}" bindtap="readyStart">{{iReady ? '等待对手…' : '开始'}}</view>
+      <view class="lobby-btn" style="margin-top:20rpx;" bindtap="backLobby">离开</view>
+    </view>
+  </block>
+
+  <!-- 棋盘 -->
+  <block wx:else>
+    <view class="gomoku-bar">
+      <view class="gomoku-status {{winner ? 'win' : ''}}">{{statusText}}</view>
+      <view class="gomoku-btns">
+        <block wx:if="{{mode === 'online'}}">
+          <view class="gbtn" wx:if="{{!winner}}" bindtap="resign">认输</view>
+          <view class="gbtn" wx:if="{{winner}}" bindtap="rematch">再来一局</view>
+          <view class="gbtn" bindtap="backLobby">离开</view>
+        </block>
+        <block wx:else>
+          <view class="gbtn" bindtap="undo">悔棋</view>
+          <view class="gbtn primary" bindtap="restart">重开</view>
+        </block>
+      </view>
+    </view>
+
+    <view class="gomoku-meta" wx:if="{{mode === 'online'}}">
+      <text>房间 {{roomCode}} · {{roomInfo}} · 你执{{myColor === 'black' ? '黑' : '白'}}</text>
+    </view>
+
+    <view class="gomoku-canvas-wrap">
+      <canvas type="2d" id="gomoku" class="gomoku-canvas" bindtouchstart="onTap"></canvas>
+    </view>
+
+    <view class="gomoku-tip">
+      <text wx:if="{{mode === 'pvp'}}">双人对战：轮流点击棋盘落子，黑先</text>
+      <text wx:elif="{{mode === 'ai'}}">人机对战：你执黑先走，白方为电脑</text>
+      <text wx:else>{{myTurn ? '轮到你落子' : '等待对手…'}}</text>
+    </view>
+  </block>
+</view>

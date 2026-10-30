@@ -1,0 +1,21 @@
+<view class="perms-page">
+  <view class="perms-tip">为每个家庭成员开通 / 禁用「家庭小游戏」与「学习小园地」，关闭后该成员无法进入对应项目</view>
+
+  <view class="perms-loading" wx:if="{{loading}}">加载中…</view>
+
+  <view class="member-card" wx:for="{{members}}" wx:key="id" wx:for-item="m">
+    <view class="member-name">{{m.name}}<text class="member-role" wx:if="{{m.role === 'admin'}}">管理员</text></view>
+    <view class="perm-row" wx:for="{{m.cells}}" wx:key="key" wx:for-item="c">
+      <text class="perm-name">{{c.name}}</text>
+      <switch
+        wx:if="{{m.role !== 'admin'}}"
+        checked="{{c.allowed}}"
+        color="#0F6E56"
+        bindchange="toggle"
+        data-mid="{{m.id}}"
+        data-key="{{c.key}}"
+      />
+      <text class="perm-admin-note" wx:else>管理员默认全部可用</text>
+    </view>
+  </view>
+</view>

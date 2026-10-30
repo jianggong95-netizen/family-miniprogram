@@ -1,0 +1,28 @@
+# 依赖
+node_modules/
+miniprogram_npm/
+
+# 密钥与部署配置（含服务器信息，勿上传）
+feiniu_key
+feiniu_key.pub
+deploy.config.json
+config_wechat.py
+
+# 大文件 / 安装包 / 备份
+backend.zip
+wechat_devtools_installer.exe
+*.zip
+*.exe
+
+# Python 缓存
+__pycache__/
+*.pyc
+
+# 编辑器 / 工具产生的目录
+.trae/
+.workbuddy/
+.vscode/
+.idea/
+*.log
+.DS_Store
+Thumbs.db

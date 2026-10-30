@@ -1,0 +1,9 @@
+{
+  "name": "closetApi",
+  "version": "1.0.0",
+  "description": "家庭衣橱云函数网关（action 路由）",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}

@@ -1,0 +1,12 @@
+.perms-page { padding: 24rpx; min-height: 100vh; background: #F4F6F5; box-sizing: border-box; }
+.perms-tip { font-size: 26rpx; color: #6B7280; line-height: 1.6; padding: 8rpx 8rpx 24rpx; }
+.perms-loading { text-align: center; color: #9CA3AF; padding: 60rpx 0; }
+
+.member-card { background: #fff; border-radius: 24rpx; padding: 28rpx 32rpx; margin-bottom: 24rpx; }
+.member-name { font-size: 34rpx; font-weight: 600; color: #1F2937; margin-bottom: 16rpx; }
+.member-role { font-size: 22rpx; color: #B45309; background: #FFF7ED; border-radius: 8rpx; padding: 4rpx 12rpx; margin-left: 12rpx; }
+
+.perm-row { display: flex; align-items: center; justify-content: space-between; padding: 18rpx 0; border-bottom: 1rpx solid #F0F2F1; }
+.perm-row:last-child { border-bottom: none; }
+.perm-name { font-size: 30rpx; color: #374151; }
+.perm-admin-note { font-size: 24rpx; color: #9CA3AF; }

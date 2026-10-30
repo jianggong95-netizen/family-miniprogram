@@ -1,0 +1,61 @@
+.type-tabs {
+  display: flex;
+  gap: 12rpx;
+  padding: 24rpx;
+}
+
+.type-tab {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  border-radius: 16rpx;
+  background: #fff;
+  font-size: 26rpx;
+  color: #4B5563;
+}
+.type-tab-active {
+  background: #0F6E56;
+  color: #fff;
+  font-weight: 500;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #F1F5F4;
+}
+.item:last-child { border-bottom: none; }
+
+.item-name { font-size: 28rpx; }
+
+.item-del {
+  font-size: 24rpx;
+  color: #D85A30;
+  padding: 6rpx 20rpx;
+  border: 1rpx solid #F5C4B3;
+  border-radius: 999rpx;
+}
+
+.add-card {
+  margin: 24rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 24rpx;
+}
+
+.add-row { display: flex; gap: 16rpx; }
+
+.add-input {
+  flex: 1;
+  height: 80rpx;
+  background: #F9FAFB;
+  border-radius: 16rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+}
+
+.add-btn { flex-shrink: 0; height: 80rpx; line-height: 80rpx; font-size: 28rpx; }
+
+.hint { text-align: center; color: #9CA3AF; font-size: 24rpx; padding: 20rpx; }

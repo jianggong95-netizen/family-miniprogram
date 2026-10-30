@@ -1,0 +1,49 @@
+<view class="bind-page">
+  <view class="logo">
+    <view class="logo-icon">橱</view>
+    <view class="logo-title">家庭衣橱</view>
+    <view class="logo-sub">全家衣服进销存管理</view>
+  </view>
+
+  <view class="mode-tabs">
+    <view class="mode-tab {{mode === 'create' ? 'mode-tab-active' : ''}}" data-mode="create" bindtap="switchMode">创建家庭</view>
+    <view class="mode-tab {{mode === 'join' ? 'mode-tab-active' : ''}}" data-mode="join" bindtap="switchMode">加入家庭</view>
+  </view>
+
+  <!-- 创建家庭 -->
+  <view class="card" wx:if="{{mode === 'create'}}">
+    <view class="form-row">
+      <text class="label">家庭名称</text>
+      <input class="input" placeholder="如：李家衣橱" value="{{familyName}}" bindinput="onFamilyNameInput" />
+    </view>
+    <view class="form-tip">创建后你就是管理员，第一个成员（你自己）会自动绑定</view>
+    <button class="btn-primary submit" loading="{{submitting}}" disabled="{{submitting}}" bindtap="createFamily">创建并进入</button>
+  </view>
+
+  <!-- 加入家庭 -->
+  <view class="card" wx:else>
+    <view class="form-row">
+      <text class="label">邀请码</text>
+      <input class="input" placeholder="6位邀请码，问管理员要" value="{{inviteCode}}" bindinput="onInviteInput" />
+    </view>
+    <button class="btn-primary submit" loading="{{submitting}}" disabled="{{submitting}}" bindtap="searchFamily">查询家庭</button>
+
+    <block wx:if="{{joinResult}}">
+      <view class="family-info">家庭：{{joinResult.family.name}}</view>
+      <view class="member-list">
+        <view
+          wx:for="{{joinResult.members}}"
+          wx:key="id"
+          class="member-opt {{selectedMemberId === item.id ? 'member-opt-active' : ''}}"
+          data-id="{{item.id}}"
+          bindtap="pickMember"
+        >
+          <view class="avatar">{{item.name[0]}}</view>
+          <view class="member-name">{{item.name}}</view>
+        </view>
+        <view wx:if="{{!joinResult.members.length}}" class="empty">该家庭暂无待绑定成员，请联系管理员先添加</view>
+      </view>
+      <button wx:if="{{joinResult.members.length}}" class="btn-primary submit" loading="{{submitting}}" disabled="{{submitting}}" bindtap="bindMe">绑定我的身份</button>
+    </block>
+  </view>
+</view>

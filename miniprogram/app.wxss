@@ -1,0 +1,120 @@
+/**
+ * 全局样式
+ */
+page {
+  --primary: #0F6E56;
+  --primary-light: #E1F5EE;
+  --danger: #D85A30;
+  --warning: #BA7517;
+  --text: #1F2937;
+  --text-secondary: #6B7280;
+  --bg: #F4F6F5;
+  --card: #ffffff;
+  --border: #E5E7EB;
+
+  background: var(--bg);
+  color: var(--text);
+  font-size: 28rpx;
+  line-height: 1.6;
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+view, text, image, input, textarea, button {
+  box-sizing: border-box;
+}
+
+/* 通用卡片 */
+.card {
+  background: var(--card);
+  border-radius: 24rpx;
+  padding: 28rpx;
+  margin: 0 24rpx 24rpx;
+  box-shadow: 0 4rpx 16rpx rgba(15, 110, 86, 0.05);
+}
+
+/* 主按钮 */
+.btn-primary {
+  background: var(--primary);
+  color: #fff;
+  border-radius: 44rpx;
+  font-size: 30rpx;
+  font-weight: 500;
+  line-height: 88rpx;
+  height: 88rpx;
+  padding: 0 40rpx;
+}
+.btn-primary::after { border: none; }
+.btn-primary[disabled] {
+  background: #9CA3AF;
+  color: #fff;
+}
+
+/* 次级按钮 */
+.btn-ghost {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-radius: 44rpx;
+  font-size: 28rpx;
+  line-height: 76rpx;
+  height: 76rpx;
+  padding: 0 32rpx;
+}
+.btn-ghost::after { border: none; }
+
+/* 危险按钮 */
+.btn-danger {
+  background: #FCEBEB;
+  color: var(--danger);
+  border-radius: 44rpx;
+  font-size: 28rpx;
+  line-height: 76rpx;
+  height: 76rpx;
+  padding: 0 32rpx;
+}
+.btn-danger::after { border: none; }
+
+/* 标签 */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 4rpx 18rpx;
+  border-radius: 999rpx;
+  font-size: 22rpx;
+  background: #F1F5F4;
+  color: var(--text-secondary);
+  margin-right: 12rpx;
+  margin-bottom: 10rpx;
+}
+.tag-primary {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+/* 空状态 */
+.empty {
+  text-align: center;
+  color: var(--text-secondary);
+  padding: 120rpx 40rpx;
+  font-size: 28rpx;
+}
+.empty .empty-icon {
+  font-size: 88rpx;
+  margin-bottom: 20rpx;
+  color: #D1D5DB;
+}
+
+/* 标题行 */
+.section-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8rpx 24rpx 20rpx;
+}
+.section-title .title {
+  font-size: 32rpx;
+  font-weight: 500;
+}
+.section-title .more {
+  font-size: 26rpx;
+  color: var(--text-secondary);
+}

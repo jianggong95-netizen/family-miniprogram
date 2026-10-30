@@ -1,0 +1,76 @@
+.tetris-page { padding: 24rpx; }
+
+.tetris-bar {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 20rpx;
+}
+.stat { font-size: 26rpx; color: #6B7280; }
+.stat-num { font-size: 30rpx; font-weight: 600; color: #0F6E56; }
+.gbtn {
+  font-size: 24rpx;
+  color: #0F6E56;
+  background: #E1F5EE;
+  padding: 12rpx 24rpx;
+  border-radius: 999rpx;
+  margin-left: auto;
+}
+.gbtn.primary { background: #0F6E56; color: #fff; margin-left: 0; }
+
+.tetris-canvas-wrap { position: relative; }
+.tetris-canvas { width: 100%; height: 860rpx; border-radius: 16rpx; }
+.tetris-mask {
+  position: absolute;
+  left: 0; right: 0; top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  color: #fff;
+  font-size: 32rpx;
+  background: rgba(0,0,0,0.5);
+  padding: 24rpx 0;
+}
+
+.tetris-ctrl {
+  margin-top: 24rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24rpx;
+}
+.ctrl-zone { display: flex; flex-direction: column; }
+.ctrl-zone.left { flex: 3; }
+.ctrl-zone.right { flex: 2; }
+.zone-label { font-size: 22rpx; color: #9CA3AF; text-align: center; margin-bottom: 12rpx; }
+.zone-row { display: flex; justify-content: center; gap: 16rpx; }
+.zone-row + .zone-row { margin-top: 16rpx; }
+
+.cbtn {
+  flex: 1;
+  height: 150rpx;
+  border-radius: 24rpx;
+  background: #fff;
+  color: #1F2937;
+  font-size: 48rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
+}
+.cbtn:active { background: #E1F5EE; }
+.cbtn.rotate {
+  height: 150rpx;
+  font-size: 40rpx;
+  font-weight: 600;
+  background: #0F6E56;
+  color: #fff;
+}
+.cbtn.rotate:active { background: #0B5544; }
+.cbtn.drop {
+  height: 120rpx;
+  font-size: 34rpx;
+  background: #FEF3C7;
+  color: #B45309;
+  font-weight: 600;
+}
+.cbtn.drop:active { background: #FDE68A; }

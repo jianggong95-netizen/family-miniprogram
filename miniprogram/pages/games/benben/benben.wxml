@@ -1,0 +1,70 @@
+<view class="stage">
+  <canvas id="benben" type="2d" class="game-canvas"></canvas>
+
+  <!-- HUD -->
+  <view class="hud">
+    <view class="hud-item">分数 <text class="hud-v">{{score}}</text></view>
+    <view class="hud-item">★ <text class="hud-v">{{coins}}</text></view>
+    <view class="hud-item">生命 <text class="hud-v">{{lives}}</text></view>
+    <view class="hud-item">时间 <text class="hud-v">{{time}}</text></view>
+    <view class="hud-item hud-best">最高 <text class="hud-v">{{best}}</text></view>
+    <view class="hud-btns">
+      <view class="hud-btn" hover-class="hud-btn-hover" catchtap="toggleMute">{{muted ? '🔇' : '🔊'}}</view>
+      <view class="hud-btn" wx:if="{{state === 'playing' || state === 'paused'}}" hover-class="hud-btn-hover" catchtap="togglePause">{{state === 'playing' ? '⏸' : '▶'}}</view>
+      <view class="hud-btn" hover-class="hud-btn-hover" catchtap="goBack">✕</view>
+    </view>
+  </view>
+
+  <!-- 镂空按键（仅游戏中显示） -->
+  <view class="pad" wx:if="{{state === 'playing' || state === 'paused'}}">
+    <!-- 左：动态摇杆区 —— 手指按在区域任意位置，摇杆即从该点出现（王者荣耀式） -->
+    <view
+      class="joy-zone"
+      bindtouchstart="joyDown"
+      bindtouchmove="joyMove"
+      bindtouchend="joyUp"
+      bindtouchcancel="joyUp"
+    >
+      <view class="joy-hint" wx:if="{{!joyOn}}">
+        <view class="joy-hint-ring">
+          <view class="ring-arrow ring-arrow-l">◀</view>
+          <view class="ring-arrow ring-arrow-r">▶</view>
+        </view>
+      </view>
+      <view class="joy {{joyDir}}" wx:if="{{joyOn}}" style="left:{{joyX}}px;top:{{joyY}}px;">
+        <view class="joy-ring"></view>
+        <view class="joy-knob" style="transform:translate({{knobX}}px,{{knobY}}px)"></view>
+      </view>
+    </view>
+    <!-- 右：A 跳 / B 跑 -->
+    <view class="btn btn-b" hover-class="pressed" hover-stay-time="60" bindtouchstart="padDown" bindtouchend="padUp" bindtouchcancel="padUp" data-k="run">
+      <view class="btn-inner">B<text class="btn-sub">跑</text></view>
+    </view>
+    <view class="btn btn-a" hover-class="pressed" hover-stay-time="60" bindtouchstart="padDown" bindtouchend="padUp" bindtouchcancel="padUp" data-k="jump">
+      <view class="btn-inner">A<text class="btn-sub">跳</text></view>
+    </view>
+  </view>
+
+  <!-- 开始界面 -->
+  <view class="overlay" wx:if="{{state === 'ready'}}">
+    <view class="ov-card">
+      <view class="ov-title">蹦蹦大陆 · 1-1 绿草原</view>
+      <view class="ov-tip">左侧屏幕任意位置按住即出现摇杆，拨动方向移动（推得越满跑得越快）｜ A 跳（长按跳更高）｜ B 跑</view>
+      <view class="ov-tip">踩怪 +100 · 顶箱出道具 · 吃星币 +10 · 踢壳连杀 · 抵达胜利旗过关</view>
+      <button class="ov-btn" bindtap="startGame">开始冒险</button>
+    </view>
+  </view>
+
+  <!-- 暂停 / 结算 -->
+  <view class="overlay" wx:if="{{state === 'paused' || state === 'win' || state === 'over'}}">
+    <view class="ov-card">
+      <view class="ov-title">{{state === 'paused' ? '已暂停' : state === 'win' ? '🚩 过关！' : '💥 游戏结束'}}</view>
+      <view class="ov-tip" wx:if="{{state !== 'paused'}}">得分 {{score}} ｜ 最高 {{best}}</view>
+      <view class="ov-btns">
+        <button class="ov-btn" wx:if="{{state === 'paused'}}" bindtap="togglePause">继续</button>
+        <button class="ov-btn" wx:if="{{state !== 'paused'}}" bindtap="startGame">再来一局</button>
+        <button class="ov-btn ov-btn-ghost" bindtap="goBack">退出</button>
+      </view>
+    </view>
+  </view>
+</view>

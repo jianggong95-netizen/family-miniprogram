@@ -1,0 +1,35 @@
+<view class="tetris-page">
+  <view class="tetris-bar">
+    <view class="stat">得分 <text class="stat-num">{{score}}</text></view>
+    <view class="stat">消行 <text class="stat-num">{{lines}}</text></view>
+    <view class="stat">等级 <text class="stat-num">{{level}}</text></view>
+    <view class="gbtn" bindtap="toggleMute">{{muted ? '🔇' : '🔊'}}</view>
+    <view class="gbtn" bindtap="pause">{{paused ? '继续' : '暂停'}}</view>
+    <view class="gbtn primary" bindtap="restart">重开</view>
+  </view>
+
+  <view class="tetris-canvas-wrap">
+    <canvas type="2d" id="tetris" class="tetris-canvas"></canvas>
+    <view class="tetris-mask" wx:if="{{paused && !over}}">已暂停，点「继续」</view>
+  </view>
+
+  <view class="tetris-ctrl">
+    <view class="ctrl-zone left">
+      <view class="zone-label">左手 · 移动</view>
+      <view class="zone-row">
+        <view class="cbtn" bindtap="move" data-d="-1">←</view>
+        <view class="cbtn" bindtap="softDrop">↓</view>
+        <view class="cbtn" bindtap="move" data-d="1">→</view>
+      </view>
+    </view>
+    <view class="ctrl-zone right">
+      <view class="zone-label">右手 · 变形</view>
+      <view class="zone-row">
+        <view class="cbtn rotate" bindtap="rotate">旋转</view>
+      </view>
+      <view class="zone-row">
+        <view class="cbtn drop" bindtap="hardDrop">直落</view>
+      </view>
+    </view>
+  </view>
+</view>

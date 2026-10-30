@@ -1,0 +1,96 @@
+<view class="stage">
+  <canvas id="bomber" type="2d" class="game-canvas"></canvas>
+
+  <!-- HUD -->
+  <view class="hud">
+    <view class="hud-group">
+      <view class="hud-item">❤️ <text class="hud-v">{{hp}}</text></view>
+      <view class="hud-item">💣 <text class="hud-v">{{bombs}}</text></view>
+      <view class="hud-item">🔥 <text class="hud-v">{{range}}</text></view>
+    </view>
+    <view class="hud-group hud-right">
+      <view class="hud-item">⭐ <text class="hud-v">{{score}}</text></view>
+      <view class="hud-item">🗺️ <text class="hud-v">{{levelNo}}</text></view>
+      <view class="hud-btn" hover-class="hud-btn-hover" catchtap="toggleMute">{{muted ? '🔇' : '🔊'}}</view>
+      <view class="hud-btn" wx:if="{{state === 'playing' || state === 'paused'}}" hover-class="hud-btn-hover" catchtap="togglePause">{{state === 'playing' ? '⏸' : '▶'}}</view>
+      <view class="hud-btn" hover-class="hud-btn-hover" catchtap="goBack">✕</view>
+    </view>
+  </view>
+
+  <!-- 摇杆 + 放弹按钮（游戏中显示） -->
+  <view class="pad" wx:if="{{state === 'playing' || state === 'paused'}}">
+    <view
+      class="joy"
+      bindtouchstart="joyDown"
+      bindtouchmove="joyMove"
+      bindtouchend="joyUp"
+      bindtouchcancel="joyUp"
+    >
+      <view class="joy-base"></view>
+      <view class="joy-stick" style="transform:translate({{stickX}}px,{{stickY}}px)"></view>
+    </view>
+    <view class="btn-bomb" hover-class="btn-bomb-hover" hover-stay-time="80" catchtap="bombBtn">💣<text class="bb-sub">放置</text></view>
+  </view>
+
+  <!-- 开始 / 选关 -->
+  <view class="overlay" wx:if="{{state === 'ready'}}">
+    <view class="ov-card">
+      <view class="ov-title">💣 炸弹小子</view>
+      <view class="ov-sub">放置炸弹 · 炸碎砖块 · 消灭怪物</view>
+      <view class="ov-tip">左下摇杆移动　右下按钮放炸弹</view>
+      <view class="ov-tip">炸开橙色砖块可能掉落道具，别被炸到自己！</view>
+      <view class="ov-tip">消灭全部怪物后会出现 🚪 出口，走进出口才算通关</view>
+      <view class="level-grid">
+        <view
+          wx:for="{{levelList}}"
+          wx:key="n"
+          class="lvl {{item.locked ? 'lvl-locked' : ''}} {{item.cleared ? 'lvl-cleared' : ''}}"
+          data-n="{{item.n}}"
+          bindtap="pickLevel"
+        >
+          <text>{{item.locked ? '🔒' : item.n}}</text>
+          <text class="lvl-sub">{{item.cleared ? '已通关' : (item.locked ? '锁定' : '可玩')}}</text>
+        </view>
+      </view>
+      <button class="ov-btn" bindtap="startGame">开始游戏</button>
+    </view>
+  </view>
+
+  <!-- 暂停 -->
+  <view class="overlay" wx:if="{{state === 'paused'}}">
+    <view class="ov-card">
+      <view class="ov-title">⏸ 暂停</view>
+      <view class="ov-btns">
+        <button class="ov-btn" bindtap="togglePause">继续</button>
+        <button class="ov-btn ov-btn-ghost" bindtap="restart">重开本关</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 通关 -->
+  <view class="overlay" wx:if="{{state === 'win'}}">
+    <view class="ov-card">
+      <view class="ov-title">🎉 关卡通过！</view>
+      <view class="ov-stars">{{stars}}</view>
+      <view class="ov-big">{{score}}</view>
+      <view class="ov-tip">{{winBreak}}</view>
+      <view class="ov-btns">
+        <button class="ov-btn" bindtap="nextLevel">下一关</button>
+        <button class="ov-btn ov-btn-ghost" bindtap="restart">再玩一次</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 失败 -->
+  <view class="overlay" wx:if="{{state === 'lose'}}">
+    <view class="ov-card">
+      <view class="ov-title">💥 游戏结束</view>
+      <view class="ov-sub">{{loseReason}}</view>
+      <view class="ov-big">{{score}}</view>
+      <view class="ov-btns">
+        <button class="ov-btn" bindtap="restart">重试</button>
+        <button class="ov-btn ov-btn-ghost" bindtap="goLevels">选关</button>
+      </view>
+    </view>
+  </view>
+</view>

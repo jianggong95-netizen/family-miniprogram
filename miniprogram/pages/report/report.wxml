@@ -1,0 +1,125 @@
+<view wx:if="{{loading}}" class="empty">加载中...</view>
+
+<view wx:elif="{{error}}" class="empty">
+  <view class="empty-icon">!</view>
+  <view>{{error}}</view>
+  <view class="btn-primary retry" bindtap="loadReport">重试</view>
+</view>
+
+<block wx:elif="{{report}}">
+  <!-- 筛选器 -->
+  <view class="filter-wrap">
+    <scroll-view scroll-x class="range-scroll" enhanced show-scrollbar="{{false}}">
+      <view class="range-row">
+        <view
+          wx:for="{{ranges}}"
+          wx:key="key"
+          class="range-chip {{activeRange === item.key ? 'active' : ''}}"
+          data-key="{{item.key}}"
+          bindtap="switchRange"
+        >{{item.label}}</view>
+      </view>
+    </scroll-view>
+    <view wx:if="{{showCustom}}" class="custom-row">
+      <picker mode="date" start="2000-01-01" end="{{today}}" value="{{customFrom}}" bindchange="pickCustomFrom">
+        <view class="date-box">{{customFrom || '开始日期'}}</view>
+      </picker>
+      <text class="date-sep">至</text>
+      <picker mode="date" start="2000-01-01" end="{{today}}" value="{{customTo}}" bindchange="pickCustomTo">
+        <view class="date-box {{customTo ? '' : 'placeholder'}}">{{customTo || '结束日期'}}</view>
+      </picker>
+      <view class="btn-ghost apply-btn" bindtap="applyCustom">应用</view>
+    </view>
+  </view>
+
+  <!-- 汇总卡片 -->
+  <view class="summary-card">
+    <view class="summary-title">本阶段概览 · {{report.rangeText}}</view>
+    <view class="summary-grid">
+      <view class="s-item">
+        <view class="s-val">{{report.purchasedPiecesText}}</view>
+        <view class="s-label">购买件数</view>
+      </view>
+      <view class="s-item">
+        <view class="s-val">{{report.purchasedCountText}}</view>
+        <view class="s-label">购买笔数</view>
+      </view>
+      <view class="s-item">
+        <view class="s-val">¥{{report.purchasedAmountText}}</view>
+        <view class="s-label">购买金额</view>
+      </view>
+      <view class="s-item">
+        <view class="s-val">¥{{report.totalValueText}}</view>
+        <view class="s-label">衣橱总价值</view>
+      </view>
+    </view>
+    <view class="summary-sub">{{report.totalPiecesText}} 件衣物（{{report.totalItemsText}} 条） · 累计总价值 ¥{{report.totalValueText}}</view>
+  </view>
+
+  <!-- 月度趋势 -->
+  <view class="section-title"><text class="title">购买金额趋势</text></view>
+  <view class="card" wx:if="{{report.trend && report.trend.length}}">
+    <view class="trend-chart">
+      <view class="trend-col" wx:for="{{report.trend}}" wx:key="month">
+        <view class="trend-bar" style="height:{{item.barPct}}%">
+          <text class="trend-amount">{{item.amountText}}</text>
+        </view>
+        <text class="trend-month">{{item.monthShort}}</text>
+      </view>
+    </view>
+    <view class="trend-empty" wx:if="{{!report.trend.length}}">本阶段暂无购买记录</view>
+  </view>
+
+  <!-- 进销存 -->
+  <view class="section-title"><text class="title">进销存统计</text></view>
+  <view class="stock-grid">
+    <view class="stock-item"><view class="stock-num">{{report.stock_in}}</view><view class="stock-label">入库</view></view>
+    <view class="stock-item"><view class="stock-num">{{report.stock_borrow}}</view><view class="stock-label">借出</view></view>
+    <view class="stock-item"><view class="stock-num">{{report.stock_return}}</view><view class="stock-label">归还</view></view>
+    <view class="stock-item"><view class="stock-num stock-red">{{report.stock_out}}</view><view class="stock-label">出库/清理</view></view>
+  </view>
+
+  <!-- 分类金额 -->
+  <view class="section-title"><text class="title">分类金额分布</text></view>
+  <view class="card" wx:if="{{report.by_category && report.by_category.length}}">
+    <view class="dist-row" wx:for="{{report.by_category}}" wx:key="category">
+      <view class="dist-name">{{item.category || '未分类'}}</view>
+      <view class="dist-val">{{item.pieces}} 件 / ¥{{item.amountText}}</view>
+    </view>
+  </view>
+  <view wx:else class="empty-small">本阶段无购买数据</view>
+
+  <!-- 归属分布 -->
+  <view class="section-title"><text class="title">归属分布</text></view>
+  <view class="card" wx:if="{{report.by_owner && report.by_owner.length}}">
+    <view class="dist-row" wx:for="{{report.by_owner}}" wx:key="name">
+      <view class="dist-name">{{item.name}}</view>
+      <view class="dist-val">{{item.pieces}} 件 / ¥{{item.amountText}}</view>
+    </view>
+  </view>
+
+  <!-- 季节分布 -->
+  <view class="section-title"><text class="title">季节分布</text></view>
+  <view class="season-grid">
+    <view class="season-item" wx:for="{{report.by_season}}" wx:key="season">
+      <view class="season-name">{{item.season}}</view>
+      <view class="season-cnt">{{item.pieces}} 件 · ¥{{item.amountText}}</view>
+    </view>
+  </view>
+
+  <!-- 购买明细 -->
+  <view class="section-title"><text class="title">本阶段购买明细</text></view>
+  <view class="card" wx:if="{{report.purchases && report.purchases.length}}">
+    <view class="record" wx:for="{{report.purchases}}" wx:key="id" data-id="{{item.id}}" bindtap="goDetail">
+      <view class="record-left">
+        <text class="pu-name">{{item.name}}</text>
+        <text class="pu-meta">{{item.category}} · {{item.purchase_date}}</text>
+      </view>
+      <view class="record-right">
+        <text class="pu-qty">x{{item.quantity}}</text>
+        <text class="pu-price">¥{{item.priceText}}</text>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty-small">本阶段暂无购买记录</view>
+</block>

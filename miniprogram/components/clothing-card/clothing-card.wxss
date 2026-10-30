@@ -1,0 +1,79 @@
+.card-wrap {
+  background: #fff;
+  border-radius: 20rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 16rpx rgba(15, 110, 86, 0.06);
+}
+
+.cover {
+  position: relative;
+  width: 100%;
+  height: 320rpx;
+  background: #F1F5F4;
+}
+
+.cover image {
+  width: 100%;
+  height: 100%;
+}
+
+.cover-empty {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #B4B2A9;
+  font-size: 26rpx;
+}
+
+.badge {
+  position: absolute;
+  top: 16rpx;
+  right: 16rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 999rpx;
+  font-size: 20rpx;
+  color: #fff;
+}
+.badge-borrow { background: #BA7517; }
+.badge-done { background: #9CA3AF; }
+
+.info {
+  padding: 20rpx 22rpx 22rpx;
+}
+
+.name {
+  font-size: 28rpx;
+  font-weight: 500;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  font-size: 22rpx;
+  color: #6B7280;
+  margin-top: 6rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 12rpx;
+}
+
+.qty {
+  font-size: 26rpx;
+  font-weight: 500;
+  color: #0F6E56;
+}
+
+.owner {
+  font-size: 22rpx;
+  color: #6B7280;
+}

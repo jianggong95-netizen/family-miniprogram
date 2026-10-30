@@ -1,0 +1,33 @@
+# 家庭衣橱进销存后端 - 飞牛OS Docker 部署
+#
+# 用法（把 backend/ 和本文件放到 /vol1/closet/ 下）：
+#   1. SSH 登录飞牛（或飞牛 Docker 界面导入）
+#   2. cd /vol1/closet && docker compose up -d --build
+#   3. 浏览器访问 http://<飞牛IP>:9990/api/health 验证
+#
+# 目录规划（建议放飞牛存储卷，受 RAID/快照保护）：
+#   /vol1/closet/backend/       后端代码（含 Dockerfile）
+#   /vol1/closet/data/          SQLite 数据库（容器自动创建，挂载到宿主机）
+#   /vol1/closet/images/        图片文件（可在飞牛"文件"应用里直接浏览）
+#
+# 微信登录凭证（可选，未配置时后端进入开发模式）：
+#   在小程序后台 https://mp.weixin.qq.com 获取 AppID / AppSecret 后取消下面两行注释
+
+services:
+  closet-api:
+    build: ./backend
+    image: closet-api:latest
+    container_name: closet-api
+    restart: unless-stopped
+    ports:
+      - "9990:3000"                     # 局域网端口（外部 9990 → 容器 3000），可自行修改
+    volumes:
+      - ./data:/app/data                # SQLite 数据库
+      - ./images:/app/images            # 图片文件（飞牛共享目录）
+    environment:
+      - PORT=3000
+      - DB_PATH=/app/data/closet.db
+      - IMAGES_DIR=/app/images
+      - NODE_ENV=production
+      - WX_APPID=<YOUR_WX_APPID>
+      - WX_SECRET=<YOUR_WX_SECRET>

@@ -1,0 +1,91 @@
+<view class="score-page">
+  <!-- 大厅 -->
+  <block wx:if="{{stage === 'lobby'}}">
+    <view class="lobby-card">
+      <view class="lobby-title">创建房间</view>
+      <view class="lobby-desc">创建后把 6 位数字房间码告诉牌友，大家各自加入，随时给任意玩家加减分</view>
+      <view class="lobby-btn primary {{busy ? 'disabled' : ''}}" bindtap="createRoom">创建房间</view>
+    </view>
+    <view class="lobby-card">
+      <view class="lobby-title">加入房间</view>
+      <input class="lobby-input" type="number" placeholder="输入 6 位数字房间码" bindinput="onJoinCodeInput" maxlength="6" />
+      <view class="code-echo" wx:if="{{joinCode}}">当前输入：<text class="code-echo-num">{{joinCode}}</text></view>
+      <view class="lobby-btn {{busy ? 'disabled' : ''}}" bindtap="joinRoom">加入房间</view>
+    </view>
+    <view class="lobby-tip">所有牌友在各自手机上看到同一张记分表和日志</view>
+  </block>
+
+  <!-- 房间 -->
+  <block wx:else>
+    <view class="room-head">
+      <view class="room-left">
+        <view class="room-code" bindtap="copyCode">{{roomCode}}</view>
+        <view class="room-sub">第 {{round}} 局 · {{status === 'ended' ? '已结束' : '进行中'}} · 点码复制</view>
+      </view>
+      <view class="room-leave" bindtap="leaveRoom">离开</view>
+    </view>
+
+    <!-- 玩家记分卡 -->
+    <view class="players">
+      <view
+        class="pcard {{item.isMe ? 'self' : ''}} {{selectedId === item.id ? 'picked' : ''}}"
+        wx:for="{{players}}"
+        wx:key="id"
+        bindtap="selectPlayer"
+        data-id="{{item.id}}"
+      >
+        <view class="pname">{{item.name}}{{item.isHost ? ' 👑' : ''}}{{item.isMe ? '（我）' : ''}}</view>
+        <view class="pscore {{item.score < 0 ? 'neg' : ''}}">{{item.score}}</view>
+      </view>
+    </view>
+
+    <!-- 记分面板 -->
+    <view class="panel" wx:if="{{status === 'playing'}}">
+      <view class="panel-title">
+        我 给 <text class="panel-target">{{selectedName || '（点选上方收分玩家）'}}</text> 出分
+      </view>
+      <view class="give-note">麻将规则：对方 +分，我的分数同步 −分</view>
+      <view class="quick-row">
+        <view class="qbtn" bindtap="quickDelta" data-v="1">1</view>
+        <view class="qbtn" bindtap="quickDelta" data-v="2">2</view>
+        <view class="qbtn" bindtap="quickDelta" data-v="4">4</view>
+        <view class="qbtn" bindtap="quickDelta" data-v="8">8</view>
+        <view class="qbtn" bindtap="quickDelta" data-v="16">16</view>
+        <view class="qbtn" bindtap="quickDelta" data-v="32">32</view>
+      </view>
+      <view class="quick-row">
+        <view class="qbtn custom-btn {{delta ? 'active' : ''}}" bindtap="openCustom">自定义 ✎</view>
+      </view>
+      <input class="delta-input" type="text" placeholder="分值（点上方快捷或自定义输入）" value="{{delta}}" bindinput="onDeltaInput" />
+      <input class="reason-input" type="text" placeholder="备注（可选，如：自摸 / 放炮）" value="{{reason}}" bindinput="onReasonInput" maxlength="20" />
+      <view class="submit-row">
+        <view class="sbtn give {{busy || !selectedId ? 'disabled' : ''}}" bindtap="submitGive">确认给分</view>
+      </view>
+    </view>
+
+    <view class="panel ended-panel" wx:else>
+      <view class="panel-title">本局已结束</view>
+      <view class="lobby-btn primary" wx:if="{{isHost}}" bindtap="reopen">再来一局（清零）</view>
+    </view>
+
+    <view class="host-bar" wx:if="{{status === 'playing' && isHost}}">
+      <view class="finish-btn" bindtap="finishRound">结束本局</view>
+    </view>
+
+    <!-- 日志 -->
+    <view class="logs">
+      <view class="logs-title">记分日志</view>
+      <view class="log-empty" wx:if="{{!logs.length}}">还没有记分记录</view>
+      <view class="log-item" wx:for="{{logs}}" wx:key="index">
+        <block wx:if="{{item.delta > 0}}">
+          <view class="log-line1">
+            <text class="log-time">{{item.time}}</text>
+            <text class="log-delta">{{item.delta}} 分</text>
+          </view>
+          <view class="log-line2">{{item.by}} −{{item.delta}} → {{item.target}} +{{item.delta}}{{item.reason ? '（' + item.reason + '）' : ''}}</view>
+        </block>
+        <view class="log-line2" wx:else>{{item.reason || item.by}}</view>
+      </view>
+    </view>
+  </block>
+</view>

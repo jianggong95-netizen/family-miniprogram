@@ -1,0 +1,224 @@
+page {
+  background: #0B1026;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.stage {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.game-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ============ HUD ============ */
+.hud {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  padding: 6px 10px;
+  box-sizing: border-box;
+  pointer-events: none;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.92);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+.hud-item { margin-right: 14px; }
+.hud-v { font-weight: bold; margin-left: 2px; color: #FFD54F; }
+.hud-best { margin-right: 0; }
+.hud-btns {
+  margin-left: auto;
+  display: flex;
+  pointer-events: auto;
+}
+.hud-btn {
+  width: 30px;
+  height: 30px;
+  line-height: 28px;
+  margin-left: 8px;
+  border-radius: 50%;
+  text-align: center;
+  font-size: 14px;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+.hud-btn-hover { background: rgba(255, 255, 255, 0.3); }
+
+/* ============ 镂空按键（王者荣耀式） ============ */
+.pad {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* 左：动态摇杆区 —— 手指按在区域任意位置，摇杆即从触点出现（王者荣耀式） */
+.joy-zone {
+  position: absolute;
+  left: 0;
+  top: 40px; /* 避开顶部 HUD 栏 */
+  width: 46%;
+  height: calc(100% - 40px);
+  pointer-events: auto;
+}
+/* 未按下时的半透明提示环（固定左下角，仅示意） */
+.joy-hint {
+  position: absolute;
+  left: calc(26px + env(safe-area-inset-left));
+  bottom: 6px;
+  width: 96px;
+  height: 96px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.joy-hint-ring {
+  position: relative;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border: 3px dashed rgba(255, 255, 255, 0.22);
+}
+.ring-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 26px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.35);
+}
+.ring-arrow-l { left: 6px; }
+.ring-arrow-r { right: 6px; }
+
+/* 按下后出现在触点处的摇杆（96px 环 + 40px 摇帽） */
+.joy {
+  position: absolute;
+  width: 96px;
+  height: 96px;
+  margin: -48px 0 0 -48px; /* 让 left/top 即触点中心 */
+}
+.joy-ring {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: inset 0 0 16px rgba(255, 255, 255, 0.12), 0 0 10px rgba(0, 0, 0, 0.2);
+  transition: border-color 0.1s, background 0.1s;
+}
+.joy.dir-left .joy-ring, .joy.dir-right .joy-ring {
+  border-color: rgba(126, 217, 255, 0.9);
+  background: rgba(126, 217, 255, 0.1);
+}
+.joy-knob {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  margin: -20px 0 0 -20px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.35) 60%, rgba(255, 255, 255, 0.15));
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+.joy.dir-left .joy-knob, .joy.dir-right .joy-knob {
+  background: radial-gradient(circle at 35% 30%, rgba(190, 240, 255, 0.95), rgba(126, 217, 255, 0.5) 60%, rgba(126, 217, 255, 0.2));
+}
+
+/* 右：A / B 镂空圆形按钮（置于底部按键区） */
+.btn {
+  position: absolute;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.1);
+  pointer-events: auto;
+  transition: transform 0.06s, border-color 0.06s, background 0.06s;
+}
+.btn-inner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 17px;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+.btn-sub { font-size: 10px; font-weight: normal; margin-top: 1px; opacity: 0.8; }
+
+.btn-a { right: calc(24px + env(safe-area-inset-right)); bottom: 30px; }
+.btn-b { right: calc(94px + env(safe-area-inset-right)); bottom: 8px; }
+
+.btn.pressed { transform: scale(0.92); }
+.btn-a.pressed { border-color: #7ED9FF; background: rgba(126, 217, 255, 0.25); }
+.btn-b.pressed { border-color: #B6F5B6; background: rgba(150, 240, 150, 0.22); }
+
+/* ============ 遮罩 ============ */
+.overlay {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 10, 28, 0.62);
+}
+.ov-card {
+  width: 78%;
+  max-width: 560px;
+  padding: 18px 22px;
+  box-sizing: border-box;
+  border-radius: 14px;
+  background: rgba(16, 24, 52, 0.92);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  text-align: center;
+  color: #fff;
+}
+.ov-title { font-size: 19px; font-weight: bold; margin-bottom: 8px; color: #FFD54F; }
+.ov-tip { font-size: 12px; color: rgba(255, 255, 255, 0.78); line-height: 1.7; margin-bottom: 4px; }
+.ov-btn {
+  margin-top: 12px;
+  display: inline-block;
+  min-width: 150px;
+  padding: 0 22px;
+  height: 38px;
+  line-height: 38px;
+  font-size: 15px;
+  color: #fff;
+  border-radius: 19px;
+  background: linear-gradient(135deg, #2F9E44, #1D6FB8);
+}
+.ov-btn::after { border: none; }
+.ov-btn-ghost { background: rgba(255, 255, 255, 0.14); border: 1px solid rgba(255, 255, 255, 0.35); }
+.ov-btns { display: flex; justify-content: center; }
+.ov-btns .ov-btn { margin-left: 8px; margin-right: 8px; }

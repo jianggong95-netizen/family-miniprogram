@@ -1,0 +1,20 @@
+<view class="filter-bar">
+  <block wx:for="{{filters}}" wx:key="key" wx:for-item="f">
+    <view class="filter-group">
+      <text class="group-label">{{f.label}}</text>
+      <scroll-view scroll-x class="group-scroll" enhanced show-scrollbar="{{false}}">
+        <view class="chips">
+          <view
+            wx:for="{{f.options}}"
+            wx:key="value"
+            wx:for-item="opt"
+            class="chip {{current[f.key] === opt.value ? 'chip-active' : ''}}"
+            data-key="{{f.key}}"
+            data-value="{{opt.value}}"
+            bindtap="onSelect"
+          >{{opt.label}}</view>
+        </view>
+      </scroll-view>
+    </view>
+  </block>
+</view>

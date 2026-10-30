@@ -1,0 +1,71 @@
+.user-card {
+  margin: 24rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 40rpx 32rpx;
+  display: flex;
+  align-items: center;
+  gap: 24rpx;
+}
+
+.avatar {
+  width: 108rpx;
+  height: 108rpx;
+  border-radius: 50%;
+  background: #0F6E56;
+  color: #fff;
+  font-size: 44rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.user-info { flex: 1; }
+.user-name { font-size: 34rpx; font-weight: 500; }
+.user-role { font-size: 24rpx; color: #6B7280; margin-top: 6rpx; }
+
+.invite-code {
+  font-size: 22rpx;
+  color: #0F6E56;
+  background: #E1F5EE;
+  padding: 8rpx 20rpx;
+  border-radius: 999rpx;
+}
+
+.menu {
+  margin: 24rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  overflow: hidden;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 32rpx;
+  border-bottom: 1rpx solid #F1F5F4;
+}
+.menu-item:last-child { border-bottom: none; }
+
+.menu-left { display: flex; align-items: center; gap: 20rpx; font-size: 28rpx; }
+
+.menu-icon {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 16rpx;
+  background: #E1F5EE;
+  color: #0F6E56;
+  font-size: 24rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.menu-icon.study { background: #FCE7F3; color: #DB2777; }
+
+.menu-arrow { color: #B4B2A9; font-size: 28rpx; }
+
+.about { text-align: center; padding: 40rpx; }
+.about-line { font-size: 22rpx; color: #B4B2A9; }

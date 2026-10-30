@@ -1,0 +1,164 @@
+.score-page { padding: 24rpx; min-height: 100vh; background: #F4F6F5; box-sizing: border-box; }
+
+/* 大厅 */
+.lobby-card { background: #fff; border-radius: 24rpx; padding: 40rpx 32rpx; margin-bottom: 24rpx; }
+.lobby-title { font-size: 36rpx; font-weight: 600; color: #1F2937; }
+.lobby-desc { font-size: 26rpx; color: #6B7280; margin: 12rpx 0 24rpx; line-height: 1.6; }
+.lobby-input {
+  background: #F4F6F5;
+  border: 4rpx solid #0F6E56;
+  border-radius: 24rpx;
+  padding: 52rpx 24rpx;
+  font-size: 64rpx;
+  font-weight: 600;
+  letter-spacing: 24rpx;
+  text-align: center;
+  margin-bottom: 28rpx;
+  min-height: 110rpx;
+}
+.lobby-btn {
+  text-align: center;
+  padding: 36rpx;
+  border-radius: 999rpx;
+  background: #E1F5EE;
+  color: #0F6E56;
+  font-size: 36rpx;
+  font-weight: 600;
+}
+.lobby-btn.primary { background: #0F6E56; color: #fff; }
+.lobby-btn.disabled { opacity: 0.5; }
+.lobby-tip { text-align: center; font-size: 24rpx; color: #9CA3AF; }
+.code-echo { text-align: center; font-size: 28rpx; color: #6B7280; margin-bottom: 20rpx; }
+.code-echo-num { font-size: 44rpx; font-weight: 700; color: #B45309; letter-spacing: 8rpx; }
+
+/* 房间头 */
+.room-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 28rpx 32rpx;
+  margin-bottom: 24rpx;
+}
+.room-code { font-size: 52rpx; font-weight: 700; letter-spacing: 10rpx; color: #B45309; }
+.room-sub { font-size: 24rpx; color: #6B7280; margin-top: 6rpx; }
+.room-leave {
+  font-size: 28rpx;
+  color: #6B7280;
+  padding: 20rpx 32rpx;
+  background: #F4F6F5;
+  border-radius: 999rpx;
+}
+
+/* 玩家记分卡：两列大卡 */
+.players { display: flex; flex-wrap: wrap; gap: 20rpx; margin-bottom: 24rpx; }
+.pcard {
+  width: calc((100% - 20rpx) / 2);
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 32rpx 16rpx;
+  text-align: center;
+  border: 4rpx solid transparent;
+  box-sizing: border-box;
+  position: relative;
+}
+.pcard.picked { border-color: #0F6E56; background: #E1F5EE; }
+.pcard.picked::after {
+  content: '✓ 收分';
+  position: absolute;
+  top: 10rpx;
+  right: 14rpx;
+  font-size: 22rpx;
+  color: #0F6E56;
+  font-weight: 600;
+}
+.pcard.self { background: #FFF7ED; border-color: #FDBA74; }
+.pcard.self .pname { color: #B45309; }
+.pname {
+  font-size: 30rpx;
+  color: #1F2937;
+  font-weight: 500;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.pscore { font-size: 64rpx; font-weight: 700; color: #0F6E56; margin-top: 10rpx; line-height: 1.2; }
+.pscore.neg { color: #DC2626; }
+
+/* 记分面板 */
+.panel { background: #fff; border-radius: 24rpx; padding: 36rpx 32rpx; margin-bottom: 24rpx; }
+.panel-title { font-size: 32rpx; color: #1F2937; margin-bottom: 12rpx; }
+.panel-target { color: #0F6E56; font-weight: 700; font-size: 36rpx; }
+.give-note { font-size: 24rpx; color: #B45309; background: #FFF7ED; border-radius: 12rpx; padding: 12rpx 20rpx; margin-bottom: 24rpx; display: inline-block; }
+.quick-row { display: flex; gap: 12rpx; margin-bottom: 16rpx; }
+.qbtn {
+  flex: 1;
+  text-align: center;
+  padding: 30rpx 0;
+  background: #F4F6F5;
+  border: 2rpx solid #E5E7EB;
+  border-radius: 20rpx;
+  font-size: 38rpx;
+  font-weight: 600;
+  color: #1F2937;
+}
+.qbtn:active { background: #E1F5EE; border-color: #0F6E56; }
+.qbtn.custom-btn { font-size: 30rpx; color: #0F6E56; background: #E1F5EE; border-color: #0F6E56; }
+.qbtn.custom-btn.active { background: #0F6E56; color: #fff; }
+.delta-input {
+  background: #F4F6F5;
+  border: 2rpx solid #E5E7EB;
+  border-radius: 20rpx;
+  padding: 32rpx 24rpx;
+  font-size: 48rpx;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 20rpx;
+}
+.reason-input {
+  background: #F4F6F5;
+  border-radius: 20rpx;
+  padding: 26rpx 24rpx;
+  font-size: 28rpx;
+  margin-bottom: 28rpx;
+}
+.submit-row { display: flex; gap: 24rpx; }
+.sbtn {
+  flex: 1;
+  text-align: center;
+  padding: 40rpx 0;
+  border-radius: 24rpx;
+  font-size: 42rpx;
+  font-weight: 700;
+}
+.sbtn.give { background: #0F6E56; color: #fff; }
+.sbtn.give:active { background: #0B5544; }
+.sbtn.disabled { opacity: 0.4; }
+
+.host-bar { margin-bottom: 24rpx; }
+.finish-btn {
+  text-align: center;
+  padding: 32rpx;
+  background: #fff;
+  border: 3rpx solid #F59E0B;
+  border-radius: 999rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #B45309;
+}
+.ended-panel { text-align: center; }
+.ended-panel .lobby-btn.primary { margin-top: 24rpx; }
+
+/* 日志 */
+.logs { background: #fff; border-radius: 24rpx; padding: 32rpx; }
+.logs-title { font-size: 32rpx; font-weight: 600; color: #1F2937; margin-bottom: 20rpx; }
+.log-empty { font-size: 26rpx; color: #9CA3AF; text-align: center; padding: 24rpx 0; }
+.log-item { padding: 20rpx 0; border-bottom: 1rpx solid #F0F2F1; }
+.log-item:last-child { border-bottom: none; }
+.log-line1 { display: flex; justify-content: space-between; align-items: center; }
+.log-time { font-size: 24rpx; color: #9CA3AF; }
+.log-delta { font-size: 40rpx; font-weight: 700; color: #6B7280; }
+.log-delta.up { color: #0F6E56; }
+.log-delta.down { color: #DC2626; }
+.log-line2 { font-size: 26rpx; color: #4B5563; margin-top: 8rpx; }

@@ -1,0 +1,92 @@
+<view wx:if="{{loading}}" class="empty">加载中...</view>
+
+<view wx:elif="{{error}}" class="empty">
+  <view class="empty-icon">!</view>
+  <view>{{error}}</view>
+  <button class="btn-primary" style="margin-top:32rpx;width:240rpx;" bindtap="init">重试</button>
+</view>
+
+<block wx:else>
+  <!-- 顶部问候 -->
+  <view class="hero">
+    <view class="hero-title">
+      <text>你好，{{member.name}}</text>
+      <text class="hero-link" bindtap="goReport">数据分析 ›</text>
+    </view>
+    <view class="hero-sub">{{family.name}} · {{overview ? overview.total_pieces : 0}} 件衣服</view>
+  </view>
+
+  <!-- 统计卡片 -->
+  <view class="stat-grid">
+    <view class="stat-card stat-main">
+      <view class="stat-num">{{overview.total_pieces || 0}}</view>
+      <view class="stat-label">总件数</view>
+    </view>
+    <view class="stat-card">
+      <view class="stat-num">{{overview.in_stock || 0}}</view>
+      <view class="stat-label">在库</view>
+    </view>
+    <view class="stat-card">
+      <view class="stat-num">{{overview.borrowed || 0}}</view>
+      <view class="stat-label">借出</view>
+    </view>
+    <view class="stat-card">
+      <view class="stat-num">{{overview.month_in || 0}}/{{overview.month_out || 0}}</view>
+      <view class="stat-label">近30天入/出</view>
+    </view>
+  </view>
+
+  <!-- 成员分布 -->
+  <view class="section-title">
+    <text class="title">家人衣服</text>
+    <text class="more" bindtap="goMembers">管理成员</text>
+  </view>
+  <scroll-view scroll-x class="member-scroll" enhanced show-scrollbar="{{false}}">
+    <view class="member-row">
+      <view
+        wx:for="{{overview.by_owner}}"
+        wx:key="id"
+        class="member-item"
+        data-id="{{item.id}}"
+        bindtap="goCloset"
+      >
+        <view class="avatar">{{item.name[0]}}</view>
+        <view class="member-name">{{item.name}}</view>
+        <view class="member-cnt">{{item.cnt}} 件</view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 季节分布 -->
+  <view class="section-title">
+    <text class="title">季节分布</text>
+  </view>
+  <view class="season-grid">
+    <view class="season-item" wx:for="{{overview.by_season}}" wx:key="season">
+      <view class="season-name">{{item.season}}</view>
+      <view class="season-cnt">{{item.cnt}} 件</view>
+    </view>
+  </view>
+
+  <!-- 最近流水 -->
+  <view class="section-title">
+    <text class="title">最近流水</text>
+    <text class="more" bindtap="goCloset">查看衣橱</text>
+  </view>
+  <view class="card" wx:if="{{overview.recent && overview.recent.length}}">
+    <view class="record" wx:for="{{overview.recent}}" wx:key="id" data-id="{{item.id}}" bindtap="goDetail">
+      <view class="record-left">
+        <text class="record-type type-{{item.typeCls}}">{{item.type}}</text>
+        <text class="record-name">{{item.clothing_name}}</text>
+      </view>
+      <view class="record-right">
+        <text class="record-qty">x{{item.quantity}}</text>
+        <text class="record-time">{{item.created_at}}</text>
+      </view>
+    </view>
+  </view>
+  <view wx:else class="empty">还没有流水，去衣橱录第一件衣服吧</view>
+
+  <!-- 快速录入 -->
+  <view class="fab" bindtap="goAdd">+</view>
+</block>

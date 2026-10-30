@@ -1,0 +1,62 @@
+<view class="study-page">
+  <!-- 首页：模块选择 -->
+  <block wx:if="{{view === 'home'}}">
+    <view class="study-head">
+      <view class="study-title">学习小园地</view>
+      <view class="study-sub">长沙 · 小学三年级</view>
+      <view class="study-score">累计积分 <text class="score-num">{{totalScore}}</text></view>
+    </view>
+
+    <view class="mod-card" wx:for="{{modules}}" wx:key="key" bindtap="start" data-key="{{item.key}}">
+      <view class="mod-icon" style="background: {{item.color}}">{{item.icon}}</view>
+      <view class="mod-info">
+        <view class="mod-name">{{item.name}}</view>
+        <view class="mod-desc">{{item.desc}}</view>
+      </view>
+      <view class="mod-arrow">></view>
+    </view>
+
+    <view class="study-tip">每轮 5 题，答对一题 +10 分，加油！</view>
+  </block>
+
+  <!-- 答题 -->
+  <block wx:elif="{{view === 'quiz'}}">
+    <view class="quiz-bar">
+      <text class="quiz-mod">{{modName}}</text>
+      <text class="quiz-progress">{{qIndex + 1}} / {{qTotal}}</text>
+      <text class="quiz-right">已答对 {{right}}</text>
+    </view>
+
+    <view class="passage" wx:if="{{passage}}">{{passage}}</view>
+    <view class="question" wx:if="{{qText}}">{{qText}}</view>
+
+    <view class="opts">
+      <view
+        class="opt {{picked === index ? (index === correctIdx ? 'right' : 'wrong') : ''}} {{picked >= 0 && index === correctIdx ? 'show-right' : ''}}"
+        wx:for="{{options}}"
+        wx:key="text"
+        bindtap="pick"
+        data-i="{{index}}"
+      >
+        <text class="opt-tag" wx:if="{{item.tag}}">{{item.tag}}</text>
+        <text>{{item.text}}</text>
+      </view>
+    </view>
+
+    <view class="feedback {{picked === correctIdx ? 'good' : 'bad'}}" wx:if="{{picked >= 0}}">{{feedback}}</view>
+    <view class="next-btn" wx:if="{{picked >= 0}}" bindtap="next">{{qIndex + 1 >= qTotal ? '看看成绩' : '下一题'}}</view>
+  </block>
+
+  <!-- 成绩 -->
+  <block wx:else>
+    <view class="result-card">
+      <view class="result-emoji">🎓</view>
+      <view class="result-text">{{resultText}}</view>
+      <view class="result-score">累计积分 {{totalScore}}</view>
+      <view class="result-btns">
+        <view class="rbtn primary" bindtap="retry">再练一轮</view>
+        <view class="rbtn" bindtap="backHome">返回</view>
+      </view>
+    </view>
+  </block>
+</view>

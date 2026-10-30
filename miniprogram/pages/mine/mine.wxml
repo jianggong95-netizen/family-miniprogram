@@ -1,0 +1,51 @@
+<view class="user-card">
+  <view class="avatar">{{member ? member.name[0] : '?'}}</view>
+  <view class="user-info">
+    <view class="user-name">{{member ? member.name : '未登录'}}</view>
+    <view class="user-role">{{member && member.role === 'admin' ? '管理员' : '成员'}} · {{family ? family.name : '—'}}</view>
+  </view>
+  <view class="invite-code" wx:if="{{family}}">邀请码 {{family.invite_code}}</view>
+</view>
+
+<view class="menu">
+  <view class="menu-item" bindtap="goMembers">
+    <view class="menu-left">
+      <view class="menu-icon">家</view>
+      <text>成员管理</text>
+    </view>
+    <view class="menu-arrow">></view>
+  </view>
+  <view class="menu-item" bindtap="goSettings">
+    <view class="menu-left">
+      <view class="menu-icon">设</view>
+      <text>分类字典设置</text>
+    </view>
+    <view class="menu-arrow">></view>
+  </view>
+  <view class="menu-item" bindtap="goGames">
+    <view class="menu-left">
+      <view class="menu-icon">游</view>
+      <text>家庭小游戏</text>
+    </view>
+    <view class="menu-arrow">></view>
+  </view>
+  <view class="menu-item" bindtap="goStudy">
+    <view class="menu-left">
+      <view class="menu-icon study">学</view>
+      <text>学习小园地</text>
+    </view>
+    <view class="menu-arrow">></view>
+  </view>
+  <view class="menu-item" bindtap="goCloset">
+    <view class="menu-left">
+      <view class="menu-icon">橱</view>
+      <text>去衣橱看看</text>
+    </view>
+    <view class="menu-arrow">></view>
+  </view>
+</view>
+
+<view class="about">
+  <view class="about-line">家庭衣橱进销存 v1.0</view>
+  <view class="about-line">部署于飞牛私有云 · 仅供家人使用</view>
+</view>

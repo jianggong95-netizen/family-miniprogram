@@ -1,0 +1,10 @@
+{
+  "navigationBarTitleText": "衣橱",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 100,
+  "backgroundColor": "#F4F6F5",
+  "usingComponents": {
+    "clothing-card": "/components/clothing-card/clothing-card",
+    "filter-bar": "/components/filter-bar/filter-bar"
+  }
+}

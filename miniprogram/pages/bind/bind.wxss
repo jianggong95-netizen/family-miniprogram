@@ -1,0 +1,91 @@
+.bind-page { padding: 60rpx 32rpx; }
+
+.logo { text-align: center; margin-bottom: 56rpx; }
+
+.logo-icon {
+  width: 128rpx;
+  height: 128rpx;
+  margin: 0 auto;
+  border-radius: 32rpx;
+  background: #0F6E56;
+  color: #fff;
+  font-size: 56rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-title { font-size: 40rpx; font-weight: 500; margin-top: 24rpx; }
+.logo-sub { font-size: 24rpx; color: #6B7280; margin-top: 8rpx; }
+
+.mode-tabs {
+  display: flex;
+  background: #E8ECEB;
+  border-radius: 999rpx;
+  padding: 6rpx;
+  margin-bottom: 32rpx;
+}
+
+.mode-tab {
+  flex: 1;
+  text-align: center;
+  padding: 16rpx 0;
+  border-radius: 999rpx;
+  font-size: 28rpx;
+  color: #6B7280;
+}
+.mode-tab-active {
+  background: #fff;
+  color: #0F6E56;
+  font-weight: 500;
+  box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.06);
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #F1F5F4;
+}
+
+.label { width: 160rpx; font-size: 26rpx; color: #4B5563; }
+.input { flex: 1; font-size: 28rpx; }
+
+.form-tip { font-size: 22rpx; color: #9CA3AF; margin: 20rpx 0; }
+
+.submit { width: 100%; margin-top: 24rpx; }
+
+.family-info { font-size: 26rpx; margin-top: 28rpx; color: #0F6E56; }
+
+.member-list { margin-top: 16rpx; display: flex; flex-wrap: wrap; gap: 20rpx; }
+
+.member-opt {
+  width: 180rpx;
+  padding: 24rpx 0;
+  border-radius: 20rpx;
+  background: #F9FAFB;
+  border: 2rpx solid transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.member-opt-active {
+  background: #E1F5EE;
+  border-color: #0F6E56;
+}
+
+.avatar {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 50%;
+  background: #0F6E56;
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.member-opt-active .avatar { background: #0F6E56; }
+
+.member-name { font-size: 26rpx; margin-top: 12rpx; }

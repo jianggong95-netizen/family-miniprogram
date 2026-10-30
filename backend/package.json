@@ -1,0 +1,19 @@
+{
+  "name": "closet-api",
+  "version": "1.0.0",
+  "description": "家庭衣橱进销存后端（飞牛OS Docker 部署）",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "@fastify/multipart": "^8.3.1",
+    "@fastify/static": "^7.0.4",
+    "better-sqlite3": "^11.3.0",
+    "fastify": "^4.28.1"
+  }
+}

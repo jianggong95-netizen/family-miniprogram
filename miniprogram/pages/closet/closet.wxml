@@ -1,0 +1,26 @@
+<view class="search-bar">
+  <input
+    class="search-input"
+    placeholder="搜索名称 / 品牌 / 备注"
+    value="{{keyword}}"
+    confirm-type="search"
+    bindinput="onSearchInput"
+    bindconfirm="onSearch"
+  />
+  <view class="search-btn" bindtap="onSearch">搜索</view>
+</view>
+
+<filter-bar filters="{{filters}}" current="{{current}}" bind:change="onFilterChange" />
+
+<view class="list" wx:if="{{list.length}}">
+  <clothing-card wx:for="{{list}}" wx:key="id" item="{{item}}" />
+</view>
+
+<view wx:elif="{{!loading}}" class="empty">
+  <view class="empty-icon">|_|</view>
+  衣橱还是空的，点右下角录一件吧
+</view>
+
+<view wx:if="{{loading}}" class="loading-tip">加载中...</view>
+
+<view class="fab" bindtap="goAdd">+</view>

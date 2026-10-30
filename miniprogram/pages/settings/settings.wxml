@@ -1,0 +1,26 @@
+<view class="type-tabs">
+  <view
+    wx:for="{{types}}"
+    wx:key="key"
+    class="type-tab {{activeType === item.key ? 'type-tab-active' : ''}}"
+    data-key="{{item.key}}"
+    bindtap="switchType"
+  >{{item.label}}</view>
+</view>
+
+<view class="card">
+  <view class="item" wx:for="{{dicts[activeType]}}" wx:key="id">
+    <text class="item-name">{{item.name}}</text>
+    <view wx:if="{{isAdmin}}" class="item-del" data-id="{{item.id}}" data-name="{{item.name}}" bindtap="removeItem">删除</view>
+  </view>
+  <view wx:if="{{!dicts[activeType] || !dicts[activeType].length}}" class="empty">暂无数据</view>
+</view>
+
+<view class="add-card" wx:if="{{isAdmin}}">
+  <view class="add-row">
+    <input class="add-input" placeholder="新增{{activeLabel}}" value="{{newName}}" bindinput="onNameInput" confirm-type="done" bindconfirm="addItem" />
+    <button class="btn-primary add-btn" bindtap="addItem">添加</button>
+  </view>
+</view>
+
+<view class="hint" wx:if="{{!isAdmin}}">仅管理员可维护分类</view>

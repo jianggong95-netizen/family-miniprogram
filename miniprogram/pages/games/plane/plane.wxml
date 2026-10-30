@@ -1,0 +1,59 @@
+<view class="plane-page">
+  <!-- 顶部状态栏 -->
+  <view class="hud">
+    <view class="hud-item">第 <text class="hud-num">{{level}}</text>/10 关</view>
+    <view class="hud-item">得分 <text class="hud-num">{{score}}</text></view>
+    <view class="hud-item">❤ <text class="hud-num">{{lives}}</text></view>
+    <view class="hud-item">火力 <text class="hud-num">{{fire}}</text></view>
+    <view class="hud-item" wx:if="{{babies > 0}}">👶 <text class="hud-num">{{babies}}</text></view>
+    <view class="gbtn" bindtap="togglePause" wx:if="{{state === 'playing' || state === 'paused'}}">{{state === 'paused' ? '继续' : '暂停'}}</view>
+    <view class="gbtn" bindtap="toggleMute">{{muted ? '🔇' : '🔊'}}</view>
+    <view class="gbtn primary" bindtap="startGame" wx:if="{{state !== 'playing' && state !== 'paused'}}">开始</view>
+  </view>
+
+  <!-- BOSS 血条 -->
+  <view class="boss-bar" wx:if="{{bossMax > 0 && bossHp > 0}}">
+    <view class="boss-fill" style="width: {{bossHp * 100 / bossMax}}%"></view>
+    <view class="boss-label">BOSS</view>
+  </view>
+
+  <!-- 游戏画布 -->
+  <view class="plane-canvas-wrap">
+    <canvas
+      type="2d"
+      id="plane"
+      class="plane-canvas"
+      bindtouchstart="onTouch"
+      bindtouchmove="onTouch"
+    ></canvas>
+
+    <!-- 开始/说明 -->
+    <view class="overlay" wx:if="{{state === 'ready'}}">
+      <view class="ov-title">✈️ 飞机大战</view>
+      <view class="ov-desc">手指拖动战机移动，自动开火</view>
+      <view class="ov-rules">
+        <view>🎯 10 大关卡，每关都有 BOSS，难度逐级提升</view>
+        <view>❤ 5 条生命；💥 大招=激光束扫屏，起始 1 个，每 800 分 / 每击落 40 架充能 1 次（上限 3）</view>
+        <view>👶 宝宝助战机（最多 5 个），发射跟踪导弹自动锁敌</view>
+        <view>⚡ 火力升级战机进化　🛡 护盾　❤ 生命 +1</view>
+      </view>
+      <view class="ov-btn" bindtap="startGame">开始战斗</view>
+    </view>
+
+    <!-- 暂停/结束/通关 -->
+    <view class="overlay" wx:elif="{{mask}}">
+      <view class="ov-mask-text">{{mask}}</view>
+      <view class="ov-btn" wx:if="{{state === 'paused'}}" bindtap="togglePause">继续</view>
+      <view class="ov-btn" wx:else bindtap="startGame">再来一局</view>
+      <view class="ov-btn ghost" bindtap="goBack">退出</view>
+    </view>
+  </view>
+
+  <!-- 底部大招栏 -->
+  <view class="bomb-bar">
+    <view class="bomb-btn {{bombs <= 0 || state !== 'playing' ? 'off' : ''}}" bindtap="useBomb">
+      💥 激光束 × {{bombs}}
+    </view>
+    <view class="bomb-tip">垂直激光扫屏 · 清弹幕持续灼伤 · 每 800 分 / 每 40 架充能（上限 3）</view>
+  </view>
+</view>

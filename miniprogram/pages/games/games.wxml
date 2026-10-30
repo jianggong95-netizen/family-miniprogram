@@ -1,0 +1,73 @@
+<view class="games-head">
+  <view class="games-title">家庭小游戏</view>
+  <view class="games-sub">传着手机一起玩，或挑战人机</view>
+</view>
+
+<view class="game-card" bindtap="enter" data-key="gomoku">
+  <view class="game-icon icon-gomoku">棋</view>
+  <view class="game-info">
+    <view class="game-name">五子棋</view>
+    <view class="game-desc">双人对战 / 人机对战，黑先白后，五连即胜</view>
+  </view>
+  <view class="game-lock" wx:if="{{locked.gomoku}}">已禁用</view>
+  <view class="game-arrow" wx:else>></view>
+</view>
+
+<view class="game-card" bindtap="enter" data-key="tetris">
+  <view class="game-icon icon-tetris">方</view>
+  <view class="game-info">
+    <view class="game-name">俄罗斯方块</view>
+    <view class="game-desc">经典消除，消行得分，速度逐级加快</view>
+  </view>
+  <view class="game-lock" wx:if="{{locked.tetris}}">已禁用</view>
+  <view class="game-arrow" wx:else>></view>
+</view>
+
+<view class="game-card" bindtap="enter" data-key="plane">
+  <view class="game-icon icon-plane">飞</view>
+  <view class="game-info">
+    <view class="game-name">飞机大战</view>
+    <view class="game-desc">10 大闯关，波次编队 / 关底 BOSS，道具升级战力，激光大招充能清屏</view>
+  </view>
+  <view class="game-lock" wx:if="{{locked.plane}}">已禁用</view>
+  <view class="game-arrow" wx:else>></view>
+</view>
+
+<view class="game-card" bindtap="enter" data-key="benben">
+  <view class="game-icon icon-benben">蹦</view>
+  <view class="game-info">
+    <view class="game-name">蹦蹦大陆</view>
+    <view class="game-desc">横屏平台跳跃，镂空按键：踩怪 / 顶箱 / 吃星币 / 踢壳连杀 / 冲线过关</view>
+  </view>
+  <view class="game-lock" wx:if="{{locked.benben}}">已禁用</view>
+  <view class="game-arrow" wx:else>></view>
+</view>
+
+<view class="game-card" bindtap="enter" data-key="score">
+  <view class="game-icon icon-score">分</view>
+  <view class="game-info">
+    <view class="game-name">打牌积分</view>
+    <view class="game-desc">创建房间牌友各自加入，点人加减分，日志实时同步</view>
+  </view>
+  <view class="game-lock" wx:if="{{locked.score}}">已禁用</view>
+  <view class="game-arrow" wx:else>></view>
+</view>
+
+<view class="game-card" bindtap="enter" data-key="bomber">
+  <view class="game-icon icon-bomber">炸</view>
+  <view class="game-info">
+    <view class="game-name">炸弹小子</view>
+    <view class="game-desc">竖屏炸弹人闯关：放弹 / 十字爆 / 链爆 / 炸砖掉道具，全灭怪物进出口过关</view>
+  </view>
+  <view class="game-lock" wx:if="{{locked.bomber}}">已禁用</view>
+  <view class="game-arrow" wx:else>></view>
+</view>
+
+<view class="game-card perms-card" wx:if="{{isAdmin}}" bindtap="goPerms">
+  <view class="game-icon icon-perms">权</view>
+  <view class="game-info">
+    <view class="game-name">游戏权限管理</view>
+    <view class="game-desc">管理员为每个家庭成员开通 / 禁用各项目</view>
+  </view>
+  <view class="game-arrow">></view>
+</view>

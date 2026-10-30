@@ -1,0 +1,89 @@
+<view wx:if="{{loading}}" class="empty">加载中...</view>
+
+<block wx:else>
+  <!-- 图片轮播 -->
+  <swiper wx:if="{{images.length}}" class="swiper" indicator-dots indicator-color="rgba(255,255,255,0.4)" indicator-active-color="#ffffff" circular>
+    <swiper-item wx:for="{{images}}" wx:key="*this" data-src="{{item}}" bindtap="previewImage">
+      <image src="{{item}}" mode="aspectFill" class="swiper-img" />
+    </swiper-item>
+  </swiper>
+  <view wx:else class="no-img">暂无图片</view>
+
+  <!-- 基本信息 -->
+  <view class="card">
+    <view class="head">
+      <view class="name">{{item.name}}</view>
+      <view class="status status-{{statusClass(item.status)}}">{{item.status}}</view>
+    </view>
+    <view class="price-qty">
+      <text class="qty">库存 {{item.quantity}} 件</text>
+      <text wx:if="{{item.purchase_price}}" class="price">¥{{item.purchase_price}}</text>
+    </view>
+    <view class="tags">
+      <text class="tag tag-primary" wx:if="{{item.owner_name}}">{{item.owner_name}}</text>
+      <text class="tag" wx:if="{{item.category}}">{{item.category}}{{item.sub_category ? ' / ' + item.sub_category : ''}}</text>
+      <text class="tag" wx:if="{{item.color}}">{{item.color}}</text>
+      <text class="tag" wx:if="{{item.season}}">{{item.season}}</text>
+      <text class="tag" wx:if="{{item.size}}">尺码 {{item.size}}</text>
+      <text class="tag" wx:if="{{item.brand}}">{{item.brand}}</text>
+      <text class="tag" wx:if="{{item.location}}">{{item.location}}</text>
+      <text class="tag" wx:if="{{item.purchase_date}}">购入 {{item.purchase_date}}</text>
+    </view>
+    <view class="note" wx:if="{{item.note}}">{{item.note}}</view>
+  </view>
+
+  <!-- 操作 -->
+  <view class="action-row">
+    <button class="btn-primary" bindtap="openStock">记一笔（进/出/借/还）</button>
+    <button class="btn-ghost" bindtap="goEdit">编辑</button>
+    <button class="btn-danger" bindtap="onDelete">删除</button>
+  </view>
+
+  <!-- 流水 -->
+  <view class="section-title">
+    <text class="title">进销存流水</text>
+  </view>
+  <view class="card" wx:if="{{records.length}}">
+    <view class="record" wx:for="{{records}}" wx:key="id">
+      <view class="record-type type-{{item.typeCls}}">{{item.type}}</view>
+      <view class="record-main">
+        <view class="record-line">数量 x{{item.quantity}}<text wx:if="{{item.price}}"> · ¥{{item.price}}</text><text wx:if="{{item.operator_name}}"> · {{item.operator_name}}</text></view>
+        <view class="record-sub">{{item.counterparty || item.note || '—'}}</view>
+      </view>
+      <view class="record-time">{{item.created_at}}</view>
+    </view>
+  </view>
+  <view wx:else class="empty">还没有流水</view>
+
+  <!-- 记一笔弹层 -->
+  <view wx:if="{{showStock}}" class="mask" bindtap="closeStock">
+    <view class="sheet" catchtap="noop">
+      <view class="sheet-title">记一笔</view>
+      <view class="sheet-item">
+        <text class="sheet-label">类型</text>
+        <view class="type-grid">
+          <view
+            wx:for="{{stockTypes}}"
+            wx:key="*this"
+            class="type-chip {{stockType === item ? 'type-chip-active' : ''}}"
+            data-type="{{item}}"
+            bindtap="pickType"
+          >{{item}}</view>
+        </view>
+      </view>
+      <view class="sheet-item">
+        <text class="sheet-label">数量</text>
+        <input class="sheet-input" type="number" value="{{stockQty}}" bindinput="onQtyInput" />
+      </view>
+      <view class="sheet-item">
+        <text class="sheet-label">来源/去向</text>
+        <input class="sheet-input" placeholder="如：淘宝 / 送小李" value="{{stockCounterparty}}" bindinput="onCounterpartyInput" />
+      </view>
+      <view class="sheet-item">
+        <text class="sheet-label">备注</text>
+        <input class="sheet-input" placeholder="选填" value="{{stockNote}}" bindinput="onNoteInput" />
+      </view>
+      <button class="btn-primary submit-btn" loading="{{submitting}}" disabled="{{submitting}}" bindtap="submitStock">确认</button>
+    </view>
+  </view>
+</block>

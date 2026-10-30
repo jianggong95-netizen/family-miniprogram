@@ -1,0 +1,16 @@
+<view class="card-wrap" bindtap="onTap">
+  <view class="cover">
+    <image wx:if="{{cover}}" src="{{cover}}" mode="aspectFill" lazy-load />
+    <view wx:else class="cover-empty">无图</view>
+    <view wx:if="{{item.status === '借出'}}" class="badge badge-borrow">借出</view>
+    <view wx:if="{{item.status === '已处理'}}" class="badge badge-done">已处理</view>
+  </view>
+  <view class="info">
+    <view class="name">{{item.name}}</view>
+    <view class="meta">{{item.category || '未分类'}}{{item.color ? ' · ' + item.color : ''}}</view>
+    <view class="row">
+      <text class="qty">x{{item.quantity}}</text>
+      <text class="owner">{{item.owner_name || ''}}</text>
+    </view>
+  </view>
+</view>
